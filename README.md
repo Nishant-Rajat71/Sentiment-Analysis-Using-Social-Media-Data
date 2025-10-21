@@ -3,8 +3,7 @@
 This application extracts text from uploaded images using OCR (Tesseract) and classifies the sentiment as Positive or Negative using a Naive Bayes classifier trained on Twitter data.
 
 🎯 Features
-
-Image Upload: Upload images containing text (social media posts, screenshots, etc.)
-OCR Processing: Automatic text extraction using Tesseract
-Sentiment Analysis: Classification as Positive or Negative
-Model Metrics: View confusion matrix and classification report
+1. Image Upload: Upload images containing text (social media posts, screenshots, etc.)
+2. OCR Processing: Automatic text extraction using Tesseract
+3. Sentiment Analysis: Classification as Positive or Negative
+4. Model Metrics: View confusion matrix and classification report
