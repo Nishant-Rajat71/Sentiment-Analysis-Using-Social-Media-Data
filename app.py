@@ -32,7 +32,7 @@ download_nltk_data()
 @st.cache_resource
 def load_and_train_model():
     # Load dataset
-    df = pd.read_csv("training.1600000.processed.noemoticon.csv", encoding='ISO-8859-1', header=None)
+    df = pd.read_csv("/content/archive (7).zip", encoding='ISO-8859-1', header=None)
     df.columns = ['Sentiment', 'ID', 'Date', 'Query', 'User', 'Text']
     
     # Keep relevant columns
