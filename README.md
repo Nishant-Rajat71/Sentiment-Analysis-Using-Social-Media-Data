@@ -7,3 +7,6 @@ This application extracts text from uploaded images using OCR (Tesseract) and cl
 2. OCR Processing: Automatic text extraction using Tesseract
 3. Sentiment Analysis: Classification as Positive or Negative
 4. Model Metrics: View confusion matrix and classification report
+
+Here's the link to access the app:
+https://sentiment-analysis-using-social-media-data-2kwxcv5ezuzwhn3t7u2.streamlit.app/
