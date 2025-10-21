@@ -45,7 +45,6 @@ def load_and_train_model():
     
     # If no file found, try to download
     if dataset_file is None:
-        st.info("Dataset not found. Downloading... This may take a few minutes on first run.")
         url = "https://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip"
         
         try:
@@ -130,13 +129,31 @@ def main():
     st.title("🎭 Social Media Sentiment Analysis")
     st.markdown("### Extract text from images and analyze sentiment using Naive Bayes")
     
-    # Sidebar
+    # Sidebar with enhanced About section
     st.sidebar.header("About")
-    st.sidebar.info(
-        "This app extracts text from uploaded images using OCR (Tesseract) "
-        "and classifies the sentiment as Positive or Negative using a "
-        "Naive Bayes classifier trained on Twitter data."
-    )
+    st.sidebar.markdown("""
+    📱 **Key Features:**
+    
+    - 🖼️ Upload images containing text
+    - 🔍 Extract text using OCR (Tesseract)
+    - 🤖 Analyze sentiment with Naive Bayes
+    - 📊 View detailed model performance
+    - ✅ Trained on Twitter data
+    
+    💡 **How It Works:**
+    
+    - Upload an image with text
+    - AI extracts the text automatically
+    - Sentiment is classified as Positive or Negative
+    - Get instant results with accuracy metrics
+    
+    🎯 **Use Cases:**
+    
+    - Social media post analysis
+    - Customer feedback review
+    - Screenshot sentiment detection
+    - Brand monitoring
+    """)
     
     # Load model
     with st.spinner("Loading model... This may take a moment."):
@@ -159,7 +176,7 @@ def main():
         st.header("Upload an Image")
         uploaded_file = st.file_uploader(
             "Choose an image containing text...",
-            type=['png', 'jpg', 'jpeg', 'bmp', 'tiff']
+            type=['png', 'jpg', 'jpeg', 'bmp', 'tiff', 'tif']
         )
         
         if uploaded_file is not None:
@@ -192,6 +209,8 @@ def main():
                         st.error(f"### Sentiment: {sentiment} 😞")
                 else:
                     st.warning("No text detected in the image. Please try another image.")
+        else:
+            st.info("👆 Please upload an image to begin analysis")
     
     with tab2:
         st.header("Model Performance Metrics")
