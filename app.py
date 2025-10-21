@@ -31,8 +31,38 @@ download_nltk_data()
 # Load and train model
 @st.cache_resource
 def load_and_train_model():
+    import urllib.request
+    import os
+    
+    # Try to load dataset from multiple possible locations
+    dataset_files = ["archive(7).csv"]
+    dataset_file = None
+    
+    for file in dataset_files:
+        if os.path.exists(file):
+            dataset_file = file
+            break
+    
+    # If no file found, try to download
+    if dataset_file is None:
+        st.info("Dataset not found. Downloading... This may take a few minutes on first run.")
+        url = "https://cs.stanford.edu/people/alecmgo/trainingandtestdata.zip"
+        
+        try:
+            # Download and extract
+            urllib.request.urlretrieve(url, "dataset.zip")
+            import zipfile
+            with zipfile.ZipFile("dataset.zip", 'r') as zip_ref:
+                zip_ref.extractall(".")
+            os.remove("dataset.zip")
+            dataset_file = "training.1600000.processed.noemoticon.csv"
+        except Exception as e:
+            st.error(f"Error downloading dataset: {e}")
+            st.info("Please upload the dataset file (archive(7).csv) to your GitHub repository.")
+            return None, None, None, None
+    
     # Load dataset
-    df = pd.read_csv("/content/archive (7).zip", encoding='ISO-8859-1', header=None)
+    df = pd.read_csv(dataset_file, encoding='ISO-8859-1', header=None)
     df.columns = ['Sentiment', 'ID', 'Date', 'Query', 'User', 'Text']
     
     # Keep relevant columns
@@ -111,7 +141,11 @@ def main():
     # Load model
     with st.spinner("Loading model... This may take a moment."):
         try:
-            model, accuracy, X_test, y_test = load_and_train_model()
+            result = load_and_train_model()
+            if result[0] is None:
+                st.error("Failed to load model. Please check the dataset.")
+                return
+            model, accuracy, X_test, y_test = result
             st.sidebar.success(f"Model loaded! Accuracy: {accuracy:.2%}")
         except Exception as e:
             st.error(f"Error loading model: {e}")
